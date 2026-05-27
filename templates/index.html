@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA News Analytics | Real-Time Web Scraper</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Background glowing gradients -->
+    <div class="blob-bg blob-1"></div>
+    <div class="blob-bg blob-2"></div>
+    <div class="blob-bg blob-3"></div>
+
+    <div class="app-container">
+        <!-- Main Navigation / Header -->
+        <header class="app-header glass-panel">
+            <div class="brand">
+                <div class="logo-glow"></div>
+                <h1>AURA<span>Scraper</span></h1>
+            </div>
+            
+            <div class="header-controls">
+                <div class="status-badge">
+                    <span class="status-dot pulsing"></span>
+                    <span class="status-text">Scheduler: Active</span>
+                </div>
+                <button id="btn-manual-scrape" class="btn btn-primary btn-glow">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    </svg>
+                    <span>Trigger Scrape</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Metric Grid -->
+        <section class="metrics-grid">
+            <div class="metric-card glass-panel hover-grow">
+                <div class="metric-icon bg-gradient-blue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <div class="metric-data">
+                    <h3 id="stat-total-articles">-</h3>
+                    <p>Total Scraped Headlines</p>
+                </div>
+            </div>
+
+            <div class="metric-card glass-panel hover-grow">
+                <div class="metric-icon bg-gradient-orange">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                    </svg>
+                </div>
+                <div class="metric-data">
+                    <h3 id="stat-hn-articles">-</h3>
+                    <p>Hacker News Articles</p>
+                </div>
+            </div>
+
+            <div class="metric-card glass-panel hover-grow">
+                <div class="metric-icon bg-gradient-purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </div>
+                <div class="metric-data">
+                    <h3 id="stat-bbc-articles">-</h3>
+                    <p>BBC Tech Articles</p>
+                </div>
+            </div>
+
+            <div class="metric-card glass-panel hover-grow">
+                <div class="metric-icon bg-gradient-green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <div class="metric-data">
+                    <h3 id="stat-last-scrape">Just Now</h3>
+                    <p>Last Crawl Operation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Dashboard -->
+        <section class="charts-section">
+            <div class="chart-container glass-panel double-width">
+                <div class="chart-header">
+                    <h2>Scraping Trend (Daily Volumes)</h2>
+                </div>
+                <div class="chart-body">
+                    <canvas id="chart-trends"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container glass-panel">
+                <div class="chart-header">
+                    <h2>Feed Distribution</h2>
+                </div>
+                <div class="chart-body compact">
+                    <canvas id="chart-sources"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container glass-panel full-width">
+                <div class="chart-header">
+                    <h2>Top Keyword Occurrences in Headlines</h2>
+                </div>
+                <div class="chart-body horizontal-bars">
+                    <canvas id="chart-keywords"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area: Article Table and Search -->
+        <section class="explorer-section glass-panel">
+            <div class="explorer-header">
+                <h2>Article Data Explorer</h2>
+                
+                <div class="filter-bar">
+                    <!-- Search Input -->
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Search title or category...">
+                    </div>
+
+                    <!-- Source Selector -->
+                    <div class="select-box">
+                        <select id="source-filter">
+                            <option value="">All Sources</option>
+                            <option value="Hacker News">Hacker News</option>
+                            <option value="BBC Tech">BBC Tech</option>
+                        </select>
+                    </div>
+
+                    <!-- Export Button -->
+                    <button id="btn-export-csv" class="btn btn-secondary">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Articles Grid/Table Wrapper -->
+            <div class="table-wrapper">
+                <table class="data-table" id="articles-table">
+                    <thead>
+                        <tr>
+                            <th width="6%">ID</th>
+                            <th width="54%">Headline Title</th>
+                            <th width="12%">Source</th>
+                            <th width="13%">Category</th>
+                            <th width="15%">Scraped At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="articles-body">
+                        <!-- Dynamic rows injected here -->
+                        <tr>
+                            <td colspan="5" class="table-placeholder">Loading article database...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination controls -->
+            <div class="pagination-footer">
+                <span class="pagination-info" id="pagination-summary">Showing 0 of 0 entries</span>
+                <div class="pagination-buttons">
+                    <button id="btn-prev-page" class="btn btn-sm btn-nav" disabled>Previous</button>
+                    <button id="btn-next-page" class="btn btn-sm btn-nav" disabled>Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Diagnostics Logs drawer -->
+        <footer class="app-footer glass-panel">
+            <div class="footer-header" id="logs-toggle">
+                <h3>System Logs & Diagnostics</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="logs-body collapsed" id="logs-body">
+                <div class="logs-grid-header">
+                    <span>Timestamp</span>
+                    <span>Source</span>
+                    <span>Status</span>
+                    <span>Articles Scraped</span>
+                    <span>Diagnostics/Error</span>
+                </div>
+                <div class="logs-list" id="logs-list">
+                    <!-- Logs injected dynamically -->
+                    <div class="log-row">Loading logs...</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
