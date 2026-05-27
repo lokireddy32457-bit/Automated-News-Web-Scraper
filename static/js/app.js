@@ -302,12 +302,12 @@ function renderTrendsChart(volumes) {
             },
             scales: {
                 x: {
-                    grid: { color: 'rgba(255,255,255,0.03)' },
-                    ticks: { color: '#9ca3af' }
+                    grid: { color: 'rgba(15, 23, 42, 0.05)' },
+                    ticks: { color: '#475569' }
                 },
                 y: {
-                    grid: { color: 'rgba(255,255,255,0.03)' },
-                    ticks: { color: '#9ca3af', precision: 0 }
+                    grid: { color: 'rgba(15, 23, 42, 0.05)' },
+                    ticks: { color: '#475569', precision: 0 }
                 }
             }
         }
@@ -329,7 +329,7 @@ function renderSourceDistributionChart(hn, bbc) {
             datasets: [{
                 data: [hn, bbc],
                 backgroundColor: ['#ff9f1c', '#8b5cf6'],
-                borderColor: 'rgba(9, 10, 15, 0.8)',
+                borderColor: 'rgba(255, 255, 255, 0.8)',
                 borderWidth: 2,
                 hoverOffset: 6
             }]
@@ -340,7 +340,7 @@ function renderSourceDistributionChart(hn, bbc) {
             plugins: {
                 legend: {
                     position: 'bottom',
-                    labels: { color: '#f3f4f6', font: { family: 'Inter', size: 11 } }
+                    labels: { color: '#0f172a', font: { family: 'Inter', size: 11 } }
                 }
             },
             cutout: '65%'
@@ -381,12 +381,12 @@ function renderKeywordsChart(keywords) {
             },
             scales: {
                 x: {
-                    grid: { color: 'rgba(255,255,255,0.03)' },
-                    ticks: { color: '#9ca3af', precision: 0 }
+                    grid: { color: 'rgba(15, 23, 42, 0.05)' },
+                    ticks: { color: '#475569', precision: 0 }
                 },
                 y: {
                     grid: { display: false },
-                    ticks: { color: '#f3f4f6', font: { family: 'Outfit', weight: '500' } }
+                    ticks: { color: '#0f172a', font: { family: 'Outfit', weight: '500' } }
                 }
             }
         }

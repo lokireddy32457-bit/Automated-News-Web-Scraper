@@ -1,23 +1,23 @@
 /* CSS Reset and Variables */
 :root {
-    --bg-dark: #030712;
-    --bg-panel: rgba(17, 24, 39, 0.45);
-    --bg-panel-hover: rgba(31, 41, 55, 0.6);
-    --border-light: rgba(255, 255, 255, 0.05);
-    --border-glow: rgba(217, 70, 239, 0.3);
+    --bg-dark: #f1f5f9; /* Slate 100 soft light gray */
+    --bg-panel: rgba(255, 255, 255, 0.45); /* Elegant light glass */
+    --bg-panel-hover: rgba(255, 255, 255, 0.7);
+    --border-light: rgba(15, 23, 42, 0.06); /* Thin dark-tint glass border */
+    --border-glow: rgba(217, 70, 239, 0.2);
     
-    --text-primary: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
+    --text-primary: #0f172a; /* Slate 900 for dark text */
+    --text-secondary: #475569; /* Slate 600 */
+    --text-muted: #64748b; /* Slate 500 */
     
-    /* Harmonious Curated Cyberpunk Accents */
+    /* Harmonious Curated Cyberpunk Accents for Light Theme */
     --color-primary: #d946ef; /* Vibrant Orchid Fuchsia */
-    --color-primary-glow: rgba(217, 70, 239, 0.5);
-    --color-cyan: #10b981; /* Mint Emerald Green */
-    --color-orange: #ff9f1c; /* Amber Gold */
-    --color-purple: #8b5cf6; /* Royal Violet */
-    --color-green: #06b6d4; /* Neon Turquoise */
-    --color-red: #ef4444; /* Vibrant Coral Red */
+    --color-primary-glow: rgba(217, 70, 239, 0.3);
+    --color-cyan: #059669; /* Rich Emerald Mint */
+    --color-orange: #d97706; /* Rich Amber Gold */
+    --color-purple: #7c3aed; /* Electric Violet */
+    --color-green: #0891b2; /* Deep Turquoise */
+    --color-red: #e11d48; /* Crimson Red */
     
     --font-header: 'Outfit', 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -47,7 +47,7 @@ body {
     position: fixed;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.18;
+    opacity: 0.28; /* Increased opacity for light-diffused gradients */
     z-index: -1;
     pointer-events: none;
     transition: var(--transition-smooth);
@@ -349,7 +349,7 @@ body {
     font-weight: 700;
     line-height: 1;
     margin-bottom: 0.25rem;
-    background: linear-gradient(180deg, #ffffff 0%, #d1d5db 100%);
+    background: linear-gradient(180deg, #0f172a 0%, #334155 100%); /* Deep charcoal text gradient */
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -530,7 +530,7 @@ body {
 }
 
 .data-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02); /* Soft dark highlight on hover for light theme */
 }
 
 .data-table tbody tr:last-child td {
